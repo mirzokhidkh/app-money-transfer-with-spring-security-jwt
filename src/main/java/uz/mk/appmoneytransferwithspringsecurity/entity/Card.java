@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import uz.mk.appmoneytransferwithspringsecurity.entity.template.AbsEntity;
@@ -33,6 +34,6 @@ public class Card extends AbsEntity {
     @Column(nullable = false)
     private Date expiredDate;
 
-    @OneToOne
-    private User user;
+//    @OneToOne
+//    private User user;
 }

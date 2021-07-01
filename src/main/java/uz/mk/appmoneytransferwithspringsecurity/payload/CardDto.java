@@ -14,7 +14,7 @@ public class CardDto {
 
     private Date expiredDate;
 
-    private Integer userId;
+//    private Integer userId;
 
 
 }

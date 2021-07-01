@@ -6,20 +6,20 @@ import org.springframework.stereotype.Service;
 import uz.mk.appmoneytransferwithspringsecurity.entity.Card;
 import uz.mk.appmoneytransferwithspringsecurity.entity.Income;
 import uz.mk.appmoneytransferwithspringsecurity.entity.Outcome;
-import uz.mk.appmoneytransferwithspringsecurity.entity.User;
+//import uz.mk.appmoneytransferwithspringsecurity.entity.User;
 import uz.mk.appmoneytransferwithspringsecurity.payload.ApiResponse;
 import uz.mk.appmoneytransferwithspringsecurity.payload.CardDto;
 import uz.mk.appmoneytransferwithspringsecurity.repository.CardRepository;
 import uz.mk.appmoneytransferwithspringsecurity.repository.IncomeRepository;
 import uz.mk.appmoneytransferwithspringsecurity.repository.OutcomeRepository;
-import uz.mk.appmoneytransferwithspringsecurity.repository.UserRepository;
+//import uz.mk.appmoneytransferwithspringsecurity.repository.UserRepository;
 
 import java.util.Optional;
 
 @Service
 public class CardService {
-    @Autowired
-    UserRepository userRepository;
+//    @Autowired
+//    UserRepository userRepository;
 
     @Autowired
     CardRepository cardRepository;
@@ -34,7 +34,7 @@ public class CardService {
     //CREATE CARD TO CARD TABLE
     public ApiResponse add(CardDto cardDto) {
         boolean existsByNumber = cardRepository.existsByNumber(cardDto.getNumber());
-        if (!existsByNumber) {
+        if (existsByNumber) {
             return new ApiResponse("Card with such a number already exists", false);
         }
         Card card = new Card();
@@ -42,22 +42,22 @@ public class CardService {
         card.setNumber(cardDto.getNumber());
         card.setExpiredDate(cardDto.getExpiredDate());
 
-        Optional<User> optionalUser = userRepository.findById(cardDto.getUserId());
-        if (optionalUser.isEmpty()) {
-            return new ApiResponse("User not found", false);
-        }
+//        Optional<User> optionalUser = userRepository.findById(cardDto.getUserId());
+//        if (optionalUser.isEmpty()) {
+//            return new ApiResponse("User not found", false);
+//        }
 
-        card.setUser(optionalUser.get());
+//        card.setUser(optionalUser.get());
         Card savedCard = cardRepository.save(card);
         return new ApiResponse("Saved", true, savedCard);
     }
 
     //DEPOSIT MONEY ON CARD
-    public ApiResponse deposit(Integer userId, Integer cardId, Double amount) {
+    public ApiResponse deposit(Integer cardId, Double amount) {
         //        User currentUser =(User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        boolean existsByIdAndUserId = cardRepository.existsByIdAndUserId(cardId, userId);
-        if (!existsByIdAndUserId) {
+        boolean existsById = cardRepository.existsById(cardId);
+        if (!existsById) {
             return new ApiResponse("Card with such a id not found", false);
         }
 
@@ -73,11 +73,11 @@ public class CardService {
     }
 
     //WITHDRAW MONEY FROM CARD
-    public ApiResponse withdraw(Integer userId, Integer cardId, Double amount) {
+    public ApiResponse withdraw(Integer cardId, Double amount) {
 //        User currentUser =(User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        boolean existsByIdAndUserId = cardRepository.existsByIdAndUserId(cardId, userId);
-        if (!existsByIdAndUserId) {
+        boolean existsById = cardRepository.existsById(cardId);
+        if (!existsById) {
             return new ApiResponse("Card with such a id not found", false);
         }
 
@@ -100,16 +100,16 @@ public class CardService {
 
 
     //TRANSFER MONEY TO ANOTHER CARD
-    public ApiResponse transfer(Integer userId, Integer senderCardId, Integer recipientCarId, Double amount) {
+    public ApiResponse transfer(Integer senderCardId, Integer recipientCarId, Double amount) {
         //        User currentUser =(User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        boolean existsByIdAndUserId = cardRepository.existsByIdAndUserId(senderCardId, userId);
-        if (!existsByIdAndUserId) {
+        boolean existsById = cardRepository.existsById(senderCardId);
+        if (!existsById) {
             return new ApiResponse("Card with such a id not found", false);
         }
 
-        boolean existsById = cardRepository.existsById(recipientCarId);
-        if (!existsById) {
+        boolean existsById1 = cardRepository.existsById(recipientCarId);
+        if (!existsById1) {
             return new ApiResponse("Recipient card not found", false);
         }
 

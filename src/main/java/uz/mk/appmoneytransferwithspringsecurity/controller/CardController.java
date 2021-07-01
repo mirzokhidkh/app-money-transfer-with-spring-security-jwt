@@ -30,29 +30,26 @@ public class CardController {
 
     //DEPOSIT MONEY ON CARD
     @PostMapping("/deposit")
-    public HttpEntity<?> deposit(@RequestParam Integer userId,
-                                 @RequestParam Integer cardId,
+    public HttpEntity<?> deposit(@RequestParam Integer cardId,
                                  @RequestParam Double amount) {
-        ApiResponse response = cardService.deposit(userId, cardId, amount);
+        ApiResponse response = cardService.deposit(cardId, amount);
         return ResponseEntity.status(response.isSuccess() ? 200 : 409).body(response);
     }
 
     //WITHDRAW MONEY FROM CARD
     @PostMapping("/withdraw")
-    public HttpEntity<?> withdraw(@RequestParam Integer userId,
-                                  @RequestParam Integer cardId,
+    public HttpEntity<?> withdraw(@RequestParam Integer cardId,
                                   @RequestParam Double amount) {
-        ApiResponse response = cardService.withdraw(userId, cardId, amount);
+        ApiResponse response = cardService.withdraw(cardId, amount);
         return ResponseEntity.status(response.isSuccess() ? 200 : 409).body(response);
     }
 
     //TRANSFER MONEY TO ANOTHER CARD
     @PostMapping("/transfer")
-    public HttpEntity<?> transfer(@RequestParam Integer senderId,
-                                  @RequestParam Integer senderCardId,
+    public HttpEntity<?> transfer(@RequestParam Integer senderCardId,
                                   @RequestParam Integer recipientCardId,
                                   @RequestParam Double amount) {
-        ApiResponse response = cardService.transfer(senderId, senderCardId, recipientCardId, amount);
+        ApiResponse response = cardService.transfer(senderCardId, recipientCardId, amount);
         return ResponseEntity.status(response.isSuccess() ? 200 : 409).body(response);
     }
 

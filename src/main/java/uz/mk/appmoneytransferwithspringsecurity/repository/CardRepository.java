@@ -10,8 +10,6 @@ import uz.mk.appmoneytransferwithspringsecurity.entity.Card;
 
 @Repository
 public interface CardRepository extends JpaRepository<Card, Integer> {
-    boolean existsByIdAndUserId(Integer id, Integer user_id);
-
     boolean existsByNumber(String number);
 
     Card getCardById(Integer id);

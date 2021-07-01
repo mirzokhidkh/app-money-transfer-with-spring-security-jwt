@@ -23,11 +23,11 @@ public class AuthController {
     AuthService authService;
 
 
-    @PostMapping("/register")
-    public HttpEntity<?> register(@RequestBody RegisterDto registerDto) {
-        ApiResponse response = authService.register(registerDto);
-        return ResponseEntity.status(response.isSuccess() ? 201: 409).body(response);
-    }
+//    @PostMapping("/register")
+//    public HttpEntity<?> register(@RequestBody RegisterDto registerDto) {
+//        ApiResponse response = authService.register(registerDto);
+//        return ResponseEntity.status(response.isSuccess() ? 201: 409).body(response);
+//    }
 
     @PostMapping("/login")
     public HttpEntity<?> login(@RequestBody LoginDto loginDto) {
